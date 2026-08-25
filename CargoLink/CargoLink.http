@@ -1,0 +1,77 @@
+@CargoLink_HostAddress = http://localhost:5146
+@dispatcherUserName = dispatcher
+@driverUserName = driver01
+@password = CargoLink123!
+@dispatcherToken = paste-dispatcher-token-here
+@driverId = paste-driver-id-here
+@bookingId = paste-booking-id-here
+
+### Login as dispatcher
+POST {{CargoLink_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "userName": "{{dispatcherUserName}}",
+  "password": "{{password}}"
+}
+
+### Current user
+GET {{CargoLink_HostAddress}}/api/auth/me
+Authorization: Bearer {{dispatcherToken}}
+Accept: application/json
+
+###
+
+### Create booking
+POST {{CargoLink_HostAddress}}/api/bookings
+Authorization: Bearer {{dispatcherToken}}
+Content-Type: application/json
+
+{
+  "customerName": "Cong ty Logistics A",
+  "pickupAddress": "Cat Lai Port",
+  "dropoffAddress": "Binh Duong ICD",
+  "pickupLatitude": 10.7696,
+  "pickupLongitude": 106.8125,
+  "dropoffLatitude": 10.9804,
+  "dropoffLongitude": 106.6519,
+  "estimatedWeightTons": 18.5
+}
+
+###
+
+### Find nearby drivers
+GET {{CargoLink_HostAddress}}/api/drivers/nearby?latitude=10.7696&longitude=106.8125&radiusKm=30
+Authorization: Bearer {{dispatcherToken}}
+Accept: application/json
+
+###
+
+### Assign driver
+POST {{CargoLink_HostAddress}}/api/bookings/{{bookingId}}/assign-driver
+Authorization: Bearer {{dispatcherToken}}
+Content-Type: application/json
+
+{
+  "driverId": "{{driverId}}"
+}
+
+###
+
+### Complete booking
+POST {{CargoLink_HostAddress}}/api/bookings/{{bookingId}}/complete
+Authorization: Bearer {{dispatcherToken}}
+
+###
+
+### Update driver location
+PUT {{CargoLink_HostAddress}}/api/drivers/{{driverId}}/location
+Authorization: Bearer {{dispatcherToken}}
+Content-Type: application/json
+
+{
+  "latitude": 10.8141,
+  "longitude": 106.7655,
+  "status": "Busy",
+  "activeBookingId": "{{bookingId}}"
+}

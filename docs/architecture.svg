@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="1100" viewBox="0 0 1240 1100" font-family="Segoe UI, system-ui, -apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606a"/>
+    </marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8250df"/>
+    </marker>
+    <style>
+      .bx   { fill:#ffffff; stroke:#d0d7de; stroke-width:1.5; rx:8; }
+      .bxa  { fill:#ffffff; stroke:#8250df; stroke-width:2; rx:8; }
+      .h    { font-size:16px; font-weight:600; fill:#1f2328; text-anchor:middle; }
+      .hb   { font-size:19px; font-weight:700; fill:#1f2328; text-anchor:middle; }
+      .sub  { font-size:13px; fill:#656d76; text-anchor:middle; }
+      .lbl  { font-size:12.5px; fill:#57606a; }
+      .lblp { font-size:12.5px; fill:#8250df; font-weight:600; }
+      .ln   { stroke:#57606a; stroke-width:1.6; fill:none; marker-end:url(#ah); }
+      .lnp  { stroke:#8250df; stroke-width:1.8; fill:none; marker-end:url(#ahp); }
+    </style>
+  </defs>
+
+  <rect width="1240" height="1100" fill="#f6f8fa"/>
+
+  <text x="60" y="54" font-size="27" font-weight="700" fill="#1f2328">CargoLink — Event-Driven Dispatch Architecture</text>
+  <text x="60" y="84" font-size="15" fill="#656d76">ASP.NET Core · Apache Kafka · Transactional Outbox · Redis GEO · SignalR</text>
+
+  <!-- clients -->
+  <rect class="bx" x="270" y="125" width="300" height="58"/>
+  <text class="h" x="420" y="160">Dispatcher Web</text>
+  <rect class="bx" x="670" y="125" width="300" height="58"/>
+  <text class="h" x="820" y="160">Driver Mobile App</text>
+
+  <path class="ln" d="M420,183 L420,226"/>
+  <path class="ln" d="M820,183 L820,226"/>
+  <text class="lbl" x="620" y="212" text-anchor="middle">REST / HTTPS</text>
+
+  <!-- api -->
+  <rect class="bx" x="270" y="228" width="700" height="82"/>
+  <text class="hb" x="620" y="262">ASP.NET Core Web API</text>
+  <text class="sub" x="620" y="288">Booking · Driver Assignment · Location Updates · Trip Completion</text>
+
+  <path class="lnp" d="M620,310 L620,366"/>
+  <text class="lblp" x="638" y="344">one database transaction</text>
+
+  <!-- transaction boundary -->
+  <rect x="228" y="368" width="784" height="152" rx="10" fill="#faf7ff" stroke="#8250df" stroke-width="2" stroke-dasharray="7 5"/>
+  <text class="lblp" x="250" y="394">SINGLE TRANSACTION — state and event commit together</text>
+
+  <rect class="bxa" x="258" y="410" width="350" height="88"/>
+  <text class="h" x="433" y="444">MySQL — business tables</text>
+  <text class="sub" x="433" y="468">bookings · drivers · trips</text>
+
+  <rect class="bxa" x="642" y="410" width="350" height="88"/>
+  <text class="h" x="817" y="444">outbox_events</text>
+  <text class="sub" x="817" y="468">pending domain events</text>
+
+  <path class="ln" d="M817,520 L817,556"/>
+  <text class="lbl" x="835" y="543">polled by relay</text>
+
+  <!-- relay -->
+  <rect class="bx" x="642" y="558" width="350" height="74"/>
+  <text class="h" x="817" y="588">Outbox Relay</text>
+  <text class="sub" x="817" y="612">background worker</text>
+
+  <path class="ln" d="M817,632 L817,688"/>
+  <text class="lbl" x="835" y="666">publish</text>
+
+  <!-- kafka -->
+  <rect class="bx" x="270" y="690" width="700" height="84"/>
+  <text class="hb" x="620" y="724">Apache Kafka</text>
+  <text class="sub" x="620" y="750">booking.created · driver.assigned · location.updated · trip.completed</text>
+
+  <path class="ln" d="M620,774 L620,834"/>
+  <text class="lbl" x="638" y="810">manual commit only after processing succeeds</text>
+
+  <!-- consumers -->
+  <rect class="bx" x="270" y="836" width="220" height="72"/>
+  <text class="h" x="380" y="879">Assignment Consumer</text>
+  <rect class="bx" x="510" y="836" width="220" height="72"/>
+  <text class="h" x="620" y="879">Location Consumer</text>
+  <rect class="bx" x="750" y="836" width="220" height="72"/>
+  <text class="h" x="860" y="879">Trip Consumer</text>
+
+  <path class="ln" d="M420,908 L462,946"/>
+  <path class="ln" d="M600,908 L520,946"/>
+  <path class="ln" d="M840,908 L790,946"/>
+
+  <!-- read side -->
+  <rect class="bx" x="330" y="948" width="280" height="70"/>
+  <text class="h" x="470" y="978">Redis GEO</text>
+  <text class="sub" x="470" y="1000">driver proximity search</text>
+
+  <rect class="bx" x="630" y="948" width="280" height="70"/>
+  <text class="h" x="770" y="978">SignalR Hub</text>
+  <text class="sub" x="770" y="1000">live vehicle status push</text>
+
+  <!-- return path -->
+  <path class="ln" d="M910,983 L1150,983 L1150,154 L974,154"/>
+  <text class="lbl" x="1165" y="580" transform="rotate(-90 1165 580)" text-anchor="middle">live vehicle updates</text>
+
+  <text x="60" y="1062" font-size="13.5" fill="#8250df" font-weight="600">Crash-safe by design: an event can never exist without the state change that produced it — and a message is never lost by an ack that arrived too early.</text>
+</svg>
